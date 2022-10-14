@@ -1,0 +1,37 @@
+package model;
+
+public class Quiz {
+    private int id;
+    private Pergunta[] perguntas;
+
+    public Quiz() {
+        this.id = -1;
+        this.perguntas = new Pergunta[4];
+    }
+
+    public Quiz(int id, Pergunta[] perguntas) {
+        this.id = id;
+        this.perguntas = perguntas;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Pergunta[] getPerguntas() {
+        return perguntas;
+    }
+
+    public void setPerguntas(Pergunta[] perguntas) {
+        this.perguntas = perguntas;
+    }
+
+    @Override
+    public String toString() {
+        return "Quiz [id=" + id + ", perguntas=" + perguntas + "]";
+    }
+}

@@ -1,60 +1,53 @@
 package model;
 
 public class Usuario {
-	private int codigo;
-	private String username;
-    private String email;
+	private int id;
+	private String nome;
+	private String email;
 	private String senha;
 	
-	public Usuario() {
-		this.codigo = -1;
-		this.username = "";
-        this.email = "";
-		this.senha = "";
-	}
-	
-	public Usuario(int codigo, String username, String email, String senha) {
-		this.codigo = codigo;
-		this.username = username;
-		this.senha = senha;
+	public Usuario(int id, String nome, String email, String senha) {
+		super();
+		this.id = id;
+		this.nome = nome;
 		this.email = email;
+		this.senha = senha;
 	}
-
-	public int getCodigo() {
-		return codigo;
+	public Usuario(String nome, String email, String senha) {
+		super();
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
 	}
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public int getId() {
+		return id;
 	}
-
-	public String getUsename() {
-		return username;
+	public void setId(int id) {
+		this.id = id;
 	}
-
-	public void setUsename(String username) {
-		this.username = username;
+	public String getNome() {
+		return nome;
 	}
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 	public String getSenha() {
 		return senha;
 	}
-
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public Usuario clone() {
+		return new Usuario(this.id, this.nome,this.email, this.senha);
+	}
 	@Override
 	public String toString() {
-		return "Usuario [codigo=" + codigo + ", username=" + username + ", email=" + email + ", senha=" + senha + "]";
-	}	
+		return "Usuario [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + "]";
+	}
 }
-

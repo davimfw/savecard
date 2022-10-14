@@ -1,0 +1,59 @@
+package dao;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Usuario;
+
+public class UsuarioDAO extends DAO {
+	public UsuarioDAO() {
+		super();
+		databaseConnection();
+	}
+	
+	public void bdClose() {
+		databaseConnectionClose();
+	}
+	
+	public boolean insert() {
+		boolean status = false;
+		if(conn != null) {
+			try {
+				Statement stm = conn.createStatement();
+				String query = "insert into usuario (id_usuario, nome) values (8, eu)";
+				stm.executeUpdate(query);
+				stm.close();
+				status = true;
+			} catch (SQLException e) {
+				e.getMessage();
+			}
+		} else {
+			System.out.println("f");
+		}
+		
+		return status;
+	}
+	
+	public List<Usuario> getAll() {
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		try {
+			Statement stm = conn.createStatement();
+			String query = "select * from usuario";
+			ResultSet rs = stm.executeQuery(query);
+			
+			while (rs.next()) {
+                Usuario u = new Usuario(rs.getInt("usuario_id"), rs.getString("nome"));
+                usuarios.add(u);
+            }
+			stm.close();
+		} catch (SQLException e) {
+			e.getMessage();
+		}
+		
+	
+	return usuarios;
+	}
+}

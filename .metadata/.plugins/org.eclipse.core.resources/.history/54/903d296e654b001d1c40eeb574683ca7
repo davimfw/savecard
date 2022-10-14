@@ -1,0 +1,96 @@
+package dao;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Usuario;
+
+public class UsuarioDAO extends DAO {
+	public UsuarioDAO() {
+		super();
+		databaseConnection();
+	}
+	
+	public void bdClose() {
+		databaseConnectionClose();
+	}
+	
+	public boolean insert() {
+		boolean status = false;
+			try {
+				Statement stm = conn.createStatement();
+				String query = "insert into usuario (nome, email, senha) values (\"oi\", \"oi@oi.com\", \"123\")";
+				stm.executeUpdate(query);
+				stm.close();
+				status = true;
+			} catch (SQLException e) {
+				e.getMessage();
+			}
+		
+		return status;
+	}
+	
+	public boolean insert(Usuario usuario) {
+		System.out.println("chamou insert");
+		boolean status = false;
+			try {
+				System.out.println("chamou insert");
+				Statement stm = conn.createStatement();
+				String query = "insert into usuario (nome, email, senha) values ('" + usuario.getNome() + "', '" + usuario.getEmail() + "', '"+ usuario.getSenha() +"')";
+				stm.executeUpdate(query);
+				stm.close();
+				status = true;
+				System.out.println("chamou insert");
+			} catch (SQLException e) {
+				e.getMessage();
+			}
+		
+		return status;
+	}
+	
+	public boolean getUsuario(String email, String senha) {
+		boolean status = false;
+		System.out.println("getUsuario");
+		try {
+			System.out.println("Aqui erro 1");
+			Statement stm = conn.createStatement();
+			System.out.println("Aqui erro 2");
+			String query = "select email, senha from usuario where email='" + email + "' AND senha='" + senha + "'";
+			System.out.println("Aqui erro 3");
+			ResultSet rs = stm.executeQuery(query);
+			System.out.println("Aqui erro 4");
+			System.out.println(rs.getString("email")+" oi " + rs.getString("senha"));
+			System.out.println("Aqui erro 5");
+			if(rs.next()) {
+				System.out.println(rs.getString("email")+" " + rs.getString("senha"));
+				status = true;
+			}
+			stm.close();
+		} catch (SQLException e) {
+			System.out.println("deu ruim");
+		}
+		
+		return status;
+	}
+	
+	public String getAll() {
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		try {
+			Statement stm = conn.createStatement();
+			String query = "select * from usuario";
+			ResultSet rs = stm.executeQuery(query);
+			
+			while (rs.next()) {
+                Usuario u = new Usuario(rs.getInt("usuario_id"), rs.getString("nome"), rs.getString("email"), rs.getString("senha"));
+                usuarios.add(u);
+            }
+			stm.close();
+		} catch (SQLException e) {
+			e.getMessage();
+		}
+		return usuarios.toString();
+	}
+}

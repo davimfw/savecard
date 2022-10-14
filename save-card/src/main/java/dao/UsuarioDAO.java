@@ -1,160 +1,89 @@
 package dao;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.Usuario;
 
 public class UsuarioDAO extends DAO {
-
-    public UsuarioDAO() {
-        super();
-        conectar();
-    }
-
-    public void finalize() {
-        close();
-    }
-
-    public boolean insert(Usuario usuario) {
-        boolean status = false;
-        try {
-            Statement st = conexao.createStatement();
-            String sql = "INSERT INTO usuario (codigo, login, senha, sexo) "
-                    + "VALUES (" + usuario.getCodigo() + ", '" + usuario.getUsename() + "', '"
-                    + usuario.getEmail() + "', '" + usuario.getSenha() + "')";
-            System.out.println(sql);
-            st.executeUpdate(sql);
-            st.close();
-            status = true;
-        } catch (SQLException u) {
-            throw new RuntimeException(u);
-        }
-        return status;
-    }
-
-    public Usuario get(int codigo) {
-        Usuario usuario = null;
-
-        try {
-            Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM produto WHERE id=" + codigo;
-            System.out.println(sql);
-            ResultSet rs = st.executeQuery(sql);
-            if (rs.next()) {
-                usuario = new Usuario(rs.getInt("codigo"), rs.getString("username"), rs.getString("email"),
-                        rs.getString("senha"));
-            }
-            st.close();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        return usuario;
-    }
-
-    public List<Usuario> get() {
-        return get("");
-    }
-
-    public List<Usuario> getOrderByCodigo() {
-        return get("codigo");
-    }
-
-    public List<Usuario> getOrderByLogin() {
-        return get("login");
-    }
-
-    public List<Usuario> getOrderBySexo() {
-        return get("sexo");
-    }
-
-    private List<Usuario> get(String orderBy) {
-
-        List<Usuario> usuarios = new ArrayList<Usuario>();
-
-        try {
-            Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM usuario" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
-            System.out.println(sql);
-            ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-                Usuario u = new Usuario(rs.getInt("codigo"), rs.getString("email"), rs.getString("email"),
-                        rs.getString("senha"));
+	public UsuarioDAO() {
+		super();
+		databaseConnection();
+	}
+	
+	public void bdClose() {
+		databaseConnectionClose();
+	}
+	
+	public boolean insert() {
+		boolean status = false;
+			try {
+				Statement stm = conn.createStatement();
+				String query = "insert into usuario (nome, email, senha) values (\"oi\", \"oi@oi.com\", \"123\")";
+				stm.executeUpdate(query);
+				stm.close();
+				status = true;
+			} catch (SQLException e) {
+				e.getMessage();
+			}
+		
+		return status;
+	}
+	
+	public boolean insert(Usuario usuario) {
+		System.out.println("chamou insert");
+		boolean status = false;
+			try {
+				System.out.println("chamou insert");
+				Statement stm = conn.createStatement();
+				String query = "insert into usuario (nome, email, senha) values ('" + usuario.getNome() + "', '" + usuario.getEmail() + "', '"+ usuario.getSenha() +"')";
+				stm.executeUpdate(query);
+				stm.close();
+				status = true;
+				System.out.println("chamou insert");
+			} catch (SQLException e) {
+				e.getMessage();
+			}
+		
+		return status;
+	}
+	
+	public Usuario getUsuario(String email, String senha) {
+		try {
+			Statement stm = conn.createStatement();
+			String query = "select * from usuario where email='" + email + "' AND senha='" + senha + "'";
+			ResultSet rs = stm.executeQuery(query);
+			if(rs.next()) {
+				Usuario aux = new Usuario(rs.getInt("id"), rs.getString("nome"), rs.getString("email"), rs.getString("senha"));
+				stm.close();
+				return aux;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("deu ruim " + e.getMessage());
+		}
+		
+		return null;
+	}
+	
+	public String getAll() {
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		try {
+			Statement stm = conn.createStatement();
+			String query = "select * from usuario";
+			ResultSet rs = stm.executeQuery(query);
+			
+			while (rs.next()) {
+                Usuario u = new Usuario(rs.getInt("usuario_id"), rs.getString("nome"), rs.getString("email"), rs.getString("senha"));
                 usuarios.add(u);
             }
-            st.close();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        return usuarios;
-    }
-
-    public List<Usuario> getSexoMasculino() {
-        List<Usuario> usuarios = new ArrayList<Usuario>();
-
-        try {
-            Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM usuario WHERE usuario.sexo LIKE 'M'";
-            System.out.println(sql);
-            ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-                Usuario u = new Usuario(rs.getInt("codigo"), rs.getString("email"), rs.getString("email"),
-                rs.getString("senha"));
-                usuarios.add(u);
-            }
-            st.close();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        return usuarios;
-    }
-
-    public boolean update(Usuario usuario) {
-        boolean status = false;
-        try {
-            Statement st = conexao.createStatement();
-            String sql = "UPDATE usuario SET login = '" + usuario.getEmail() + "', senha = '"
-                    + usuario.getUsename() + "', sexo = '" + usuario.getSenha() + "'"
-                    + " WHERE codigo = " + usuario.getCodigo();
-            System.out.println(sql);
-            st.executeUpdate(sql);
-            st.close();
-            status = true;
-        } catch (SQLException u) {
-            throw new RuntimeException(u);
-        }
-        return status;
-    }
-
-    public boolean delete(int codigo) {
-        boolean status = false;
-        try {
-            Statement st = conexao.createStatement();
-            String sql = "DELETE FROM usuario WHERE codigo = " + codigo;
-            System.out.println(sql);
-            st.executeUpdate(sql);
-            st.close();
-            status = true;
-        } catch (SQLException u) {
-            throw new RuntimeException(u);
-        }
-        return status;
-    }
-
-    public boolean autenticar(String login, String senha) {
-        boolean resp = false;
-
-        try {
-            Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM usuario WHERE login LIKE '" + login + "' AND senha LIKE '" + senha + "'";
-            System.out.println(sql);
-            ResultSet rs = st.executeQuery(sql);
-            resp = rs.next();
-            st.close();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        return resp;
-    }
+			stm.close();
+		} catch (SQLException e) {
+			e.getMessage();
+		}
+		return usuarios.toString();
+	}
 }

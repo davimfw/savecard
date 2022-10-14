@@ -1,0 +1,21 @@
+1665591339273	Rename compilation unit 'App.java'
+1665613416340	Rename resource 'cadastro.html'
+1665613539949	Rename resource 'cadastro.vm'
+1665662697847	Rename resource 'cadastro.html'
+1665663500892	Move 'cadastro.vm' to 'view'
+1665663519400	Move 'css' to 'public'
+1665663521599	Move 'img' to 'public'
+1665663526551	Delete element
+1665666484564	Move 'global.css' to 'public'
+1665666562887	Move 'global.css' to 'css'
+1665704018334	Move 'global.css' to 'public'
+1665704327695	Rename resource 'cadastro.css'
+1665704338902	Rename resource 'style.css'
+1665704761136	Rename resource 'cadastro.vm'
+1665704769365	Rename resource 'style.vm'
+1665704780645	Delete element
+1665705682971	Encapsulate field 'senha'
+1665705687024	Encapsulate field 'email'
+1665718669603	Rename resource 'home.vm'
+1665721706474	Delete element
+1665722045715	Delete element

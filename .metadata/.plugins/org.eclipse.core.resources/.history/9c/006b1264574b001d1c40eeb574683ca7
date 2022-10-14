@@ -1,0 +1,35 @@
+package app;
+
+import static spark.Spark.*;
+
+import java.util.HashMap;
+
+import dao.UsuarioDAO;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import spark.template.velocity.VelocityTemplateEngine;
+
+public class HelloWorld {
+
+	public static void main(String[] args) {
+		port(4568);
+		UsuarioDAO dao = new UsuarioDAO();
+		dao.getAll();
+		VelocityTemplateEngine vte = new VelocityTemplateEngine();
+		staticFiles.location("/public");
+        get("/cadastro", HelloWorld::cadastro, vte);
+        post("/cadastro", HelloWorld::generateCadastro);
+    }
+	
+	public static ModelAndView cadastro(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+		
+		return new ModelAndView(model, "view/cadastro.vm");
+	}
+	
+	public static Object generateCadastro(Request req, Response res) {
+		System.out.println(req.queryParams("nome"));
+		return "ok";
+	}
+}

@@ -1,0 +1,48 @@
+package model;
+
+public class Pergunta {
+    private int id;
+    private String enunciado;
+    private String[] respostas;
+
+    public Pergunta() {
+        this.id = -1;
+        this.enunciado = "";
+        this.respostas = new String[4];
+    }
+
+    public Pergunta(int id, String enunciado, String[] respostas) {
+        this.id = id;
+        this.enunciado = enunciado;
+        this.respostas = respostas;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getEnunciado() {
+        return enunciado;
+    }
+
+    public void setEnunciado(String enunciado) {
+        this.enunciado = enunciado;
+    }
+
+    public String[] getRespostas() {
+        return respostas;
+    }
+
+    public void setRespostas(String[] respostas) {
+        this.respostas = respostas;
+    }
+
+    @Override
+    public String toString() {
+        return "Pergunta [id=" + id + ", enunciado=" + enunciado + ", respostas=" + respostas + "]";
+    }
+}

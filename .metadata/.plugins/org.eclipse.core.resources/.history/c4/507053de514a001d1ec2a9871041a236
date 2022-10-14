@@ -1,0 +1,51 @@
+package dao;
+
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class UsuarioDAO extends DAO {
+	public UsuarioDAO() {
+		super();
+		databaseConnection();
+	}
+	
+	public void bdClose() {
+		databaseConnectionClose();
+	}
+	
+	public boolean insert() {
+		boolean status = false;
+		if(conn != null) {
+			try {
+				Statement stm = conn.createStatement();
+				String query = "insert into usuario (id_usuario, nome) values (8, eu)";
+				stm.executeUpdate(query);
+				stm.close();
+				status = true;
+			} catch (SQLException e) {
+				e.getMessage();
+			}
+		} else {
+			System.out.println("f");
+		}
+		
+		return status;
+	}
+	
+	public boolean getAll() {
+		boolean status = false;
+		
+		try {
+			Statement stm = conn.createStatement();
+			String query = "select * from usuario";
+			stm.executeQuery(query);
+			stm.close();
+			status = true;
+		} catch (SQLException e) {
+			e.getMessage();
+		}
+		
+	
+	return status;
+	}
+}

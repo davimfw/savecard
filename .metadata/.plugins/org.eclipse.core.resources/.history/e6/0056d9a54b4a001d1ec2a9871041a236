@@ -1,0 +1,27 @@
+package dao;
+
+import java.sql.*;
+
+public class DAO {
+	protected Connection conn;
+	
+	public DAO() {
+		conn = null;
+	}
+	
+	public boolean databaseConnection() {
+		String serverName = "localhost";
+		String db = "save-card";
+		int port = 5432;
+		String url = "jdbc:postgres://" + serverName + ":" + port + "/" + db;
+		String username = "postgres";
+		String password = "123";
+		boolean status = false;
+		
+		try { 
+			conn = DriverManager.getConnection(url, username, password);
+		} catch (SQLException err) {
+			
+		}
+	}
+}
