@@ -43,11 +43,13 @@
 	</section>
 	<section name="MavenProjectWizardArtifactPage">
 		<list key="groupId">
+			<item value="com.savecard"/>
 			<item value="com.save-card"/>
 		</list>
 		<list key="name">
 		</list>
 		<list key="artifactId">
+			<item value="savecard"/>
 			<item value="save-card"/>
 		</list>
 		<list key="projectNameTemplate">
