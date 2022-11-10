@@ -15,7 +15,7 @@ public class DAO {
 		int port = 5432;
 		String url = "jdbc:postgresql://" + serverName + ":" + port + "/" + db;
 		String username = "postgres";
-		String password = "123";
+		String password = "ti@cc";
 		boolean status = false;
 		
 		try {

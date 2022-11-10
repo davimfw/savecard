@@ -23,11 +23,13 @@ public class App {
 		VelocityTemplateEngine vte = new VelocityTemplateEngine();
 		staticFiles.location("/public");
 		get("/home", App::home, vte);
+		get("/home2", App::home2, vte);
 		get("/quiz", App::quiz, vte);
 		post("/quiz", App::saveQuiz);
 		get("/perfil", App::perfil, vte);
 		get("/login", App::login, vte);
         get("/cadastro", App::cadastro, vte);
+        get("/sair", App::sair, vte);
         post("/cadastro", App::generateCadastro);
         
     }
@@ -37,6 +39,12 @@ public class App {
 		model.put("usuario", usuarioLogado);
 		return new ModelAndView(model, "view/home.vm");
 	}
+	public static ModelAndView home2(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+		model.put("usuario", usuarioLogado);
+		return new ModelAndView(model, "view/home2.vm");
+	}
+	
 	
 	public static ModelAndView quiz(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
@@ -71,11 +79,27 @@ public class App {
 			usuarioLogado = (daoUs.getUsuario(email, senha)).clone();
 			System.out.println(usuarioLogado.toString());
 			if(usuarioLogado != null) {
-				res.redirect("/home");
-				return new ModelAndView(model, "view/home.vm");
+				res.redirect("/home2");
+				return new ModelAndView(model, "view/home2.vm");
 			}
 		}
 		return new ModelAndView(model, "view/login.vm");
+	}
+	
+	public static ModelAndView sair(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+		String email = req.queryParams("email");
+		String senha = req.queryParams("password");
+		System.out.println("login main " + email + " " + senha);
+		if(email != null && senha != null) {
+			usuarioLogado = null;
+		System.out.println(usuarioLogado);
+		if(usuarioLogado==null) {
+			res.redirect("/login");
+			return new ModelAndView(model, "view/login.vm");
+			}
+		}
+		return new ModelAndView(model, "view/home2.vm");
 	}
 	
 	public static ModelAndView cadastro(Request req, Response res) {
