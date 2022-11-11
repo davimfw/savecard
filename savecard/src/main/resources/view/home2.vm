@@ -24,7 +24,7 @@
             <!-- Navbar content -->
             <div>
 				<a class="navbar-brand" href="/home">Página Inicial</a>
-                <a class="navbar-brand" href="/login">Login</a>
+                <a class="navbar-brand" href="/login">Sair</a>
             </div>
         </nav>
         <!-- Navbar -->
@@ -34,7 +34,7 @@
     <main>
         <aside>
             <div class="conteudo">
-                <h2><span>Bem vindo</span></h2>
+                <h2><span>Olá $usuario.getNome()</span></h2>
                 <div class="texto">
                     <p>
                         Somos a Savecard, iremos recomendar o melhor cartao para o seu bolso!

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/resultado.css">
+    <title>Resutado</title>
+</head>
+<body>
+    <div class="container">
+        <div class="resultado-image">
+            <img src="img/savecard_Prancheta 1.png">
+        </div>
+        <div class="resultado>
+            <form action="#">
+                <div class="resultado-header">
+                    <div class="title">
+                        <h1>Itau Personnalité</h1>
+                    </div>
+                </div>
+
+                <div class="Cartão">
+                    <img src="/img/itau-personalite.png"> 
+                </div>
+
+                <div class="buttons">
+                    <div class="like-button">
+                        <button class="button">Gostei</button>
+                    </div>
+
+                    <div class="disike-button">
+                        <button class="button">Não Gostei</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</body>

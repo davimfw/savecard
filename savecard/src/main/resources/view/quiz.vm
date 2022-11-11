@@ -71,7 +71,7 @@
                 </select>
             </div>
             <div class="send-resp">
-                <button class="botao" href="/home">Enviar Respostas</button>
+                <button class="botao" href="/resultado">Enviar Respostas</button>
             </div>
         </div>
        </form>

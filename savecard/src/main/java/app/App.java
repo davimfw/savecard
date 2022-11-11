@@ -31,8 +31,9 @@ public class App {
         get("/cadastro", App::cadastro, vte);
         get("/sair", App::sair, vte);
         post("/cadastro", App::generateCadastro);
-        
+        get("/resultado", App::resultado, vte);
     }
+	
 	
 	public static ModelAndView home(Request req, Response res) {
 		HashMap<String, Object> model = new HashMap<>();
@@ -52,16 +53,24 @@ public class App {
 		return new ModelAndView(model, "view/quiz.vm");
 	}
 	
-	public static Object saveQuiz(Request req, Response res) {
+	public static Object saveQuiz(Request req, Response res){
+		HashMap<String, Object> model = new HashMap<>();
 		String r1 = req.queryParams("r1");
 		String r2 = req.queryParams("r2");
 		String r3 = req.queryParams("r3");
 		String r4 = req.queryParams("r4");
 		int usuarioId = usuarioLogado.getId();
 		System.out.println("chamou");
+		
 		daoQuiz.insert(new Quiz(r1, r2, r3, r4, usuarioId));
-		res.redirect("/home");
-		return "ok";
+		res.redirect("/resultado");
+		return new ModelAndView(model, "view/resultado.vm");
+	}
+	
+	public static ModelAndView resultado(Request req, Response res) {
+		HashMap<String, Object> model = new HashMap<>();
+		model.put("usuario", usuarioLogado);
+		return new ModelAndView(model, "view/resultado.vm");
 	}
 	
 	public static ModelAndView perfil(Request req, Response res) {
@@ -117,4 +126,5 @@ public class App {
 		res.redirect("/login");
 		return "ok";
 	}
+	
 }
